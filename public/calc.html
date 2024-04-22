@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Калькулятор</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+			}
+			.calculator {
+				width: 300px;
+				margin: 50px auto;
+				padding: 20px;
+				background-color: #f0f0f0;
+				border-radius: 10px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			.output {
+				margin-bottom: 10px;
+				padding: 10px;
+				background-color: #fff;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				font-size: 24px;
+				text-align: right;
+			}
+			.button {
+				width: 60px;
+				height: 60px;
+				margin: 5px;
+				border: none;
+				border-radius: 5px;
+				background-color: #ccc;
+				font-size: 20px;
+				cursor: pointer;
+				transition: background-color 0.3s;
+			}
+			.button:hover {
+				background-color: #bbb;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<a class="back-link" href="index.html">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="25"
+					height="25"
+					viewBox="0 0 448 512"
+				>
+					<path
+						d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
+					/>
+				</svg>
+			</a>
+		</header>
+		<div class="calculator">
+			<div class="output" id="output">0</div>
+			<button class="button" onclick="appendToOutput('7')">7</button>
+			<button class="button" onclick="appendToOutput('8')">8</button>
+			<button class="button" onclick="appendToOutput('9')">9</button>
+			<button class="button" onclick="appendToOutput('+')">+</button>
+			<br />
+			<button class="button" onclick="appendToOutput('4')">4</button>
+			<button class="button" onclick="appendToOutput('5')">5</button>
+			<button class="button" onclick="appendToOutput('6')">6</button>
+			<button class="button" onclick="appendToOutput('-')">-</button>
+			<br />
+			<button class="button" onclick="appendToOutput('1')">1</button>
+			<button class="button" onclick="appendToOutput('2')">2</button>
+			<button class="button" onclick="appendToOutput('3')">3</button>
+			<button class="button" onclick="appendToOutput('*')">*</button>
+			<br />
+			<button class="button" onclick="appendToOutput('0')">0</button>
+			<button class="button" onclick="appendToOutput('.')">.</button>
+			<button class="button" onclick="calculate()">=</button>
+			<button class="button" onclick="appendToOutput('/')">/</button>
+			<br />
+			<button class="button" onclick="clearOutput()">C</button>
+		</div>
+
+		<script>
+			function appendToOutput(value) {
+				let output = document.getElementById("output");
+				if (output.textContent === "0") {
+					output.textContent = value;
+				} else {
+					output.textContent += value;
+				}
+			}
+
+			function calculate() {
+				let result;
+				try {
+					result = eval(document.getElementById("output").textContent);
+				} catch (error) {
+					result = "Error";
+				}
+				document.getElementById("output").textContent = result;
+			}
+
+			function clearOutput() {
+				document.getElementById("output").textContent = "0";
+			}
+		</script>
+	</body>
+</html>

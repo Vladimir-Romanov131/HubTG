@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Новости</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+			.news-container {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			.article {
+				width: 300px;
+				margin: 10px;
+				padding: 10px;
+				background-color: #f0f0f0;
+				border-radius: 5px;
+				box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+			}
+			.article h3 {
+				margin-top: 0;
+				font-size: 16px;
+			}
+			.article p {
+				margin-bottom: 0;
+				font-size: 14px;
+			}
+			.article a {
+				display: block;
+				font-size: 14px;
+				text-align: right;
+				color: blue;
+				text-decoration: none;
+			}
+			.article .image {
+				height: 150px;
+				background-size: cover;
+				background-position: center;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<a class="back-link" href="index.html">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="25"
+					height="25"
+					viewBox="0 0 448 512"
+				>
+					<path
+						d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
+					/>
+				</svg>
+			</a>
+		</header>
+		<div class="news-container" id="news-container">
+			<!-- Здесь будут отображаться новости -->
+		</div>
+
+		<script>
+			// Замените 'YOUR_API_KEY' на ваш API ключ News API
+			const API_KEY = "f418e43b4d144d378006ba5a11603a7d";
+			const country = "ru"; // Замените на код страны, например, 'us' для США
+
+			// Функция для получения новостей
+			async function getNews() {
+				try {
+					const response = await fetch(
+						`https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${API_KEY}`
+					);
+					const data = await response.json();
+					return data.articles;
+				} catch (error) {
+					console.error("Ошибка при получении новостей:", error);
+					return [];
+				}
+			}
+
+			// Функция для отображения новостей на странице
+			async function displayNews() {
+				const articles = await getNews();
+				const newsContainer = document.getElementById("news-container");
+				articles.forEach((article) => {
+					const articleElement = document.createElement("div");
+					articleElement.classList.add("article");
+					articleElement.innerHTML = `
+        <h3>${article.title}</h3>
+        <div class="image" style="background-image: url(${
+					article.urlToImage ? article.urlToImage : "placeholder.jpg"
+				})"></div>
+        <p>${article.description}</p>
+        <a href="${article.url}" target="_blank">Читать полностью</a>
+        `;
+					newsContainer.appendChild(articleElement);
+				});
+			}
+
+			// Вызовем функцию отображения новостей при загрузке страницы
+			displayNews();
+		</script>
+	</body>
+</html>
