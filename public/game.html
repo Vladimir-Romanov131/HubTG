@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Крестики-нолики</title>
+<style>
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 2px;
+  }
+  .cell {
+    width: 100px;
+    height: 100px;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .cell:hover {
+    background-color: lightblue;
+  }
+</style>
+</head>
+<body>
+    <header> 
+        <a class="back-link" href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25"
+            height="25" viewBox="0 0 448 512">
+            <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></a></header>
+
+<div class="board" id="board">
+  <div class="cell" onclick="makeMove(0, 0)"></div>
+  <div class="cell" onclick="makeMove(0, 1)"></div>
+  <div class="cell" onclick="makeMove(0, 2)"></div>
+  <div class="cell" onclick="makeMove(1, 0)"></div>
+  <div class="cell" onclick="makeMove(1, 1)"></div>
+  <div class="cell" onclick="makeMove(1, 2)"></div>
+  <div class="cell" onclick="makeMove(2, 0)"></div>
+  <div class="cell" onclick="makeMove(2, 1)"></div>
+  <div class="cell" onclick="makeMove(2, 2)"></div>
+</div>
+
+<script>
+  let currentPlayer = 'X';
+  let board = [
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', '']
+  ];
+
+  function makeMove(row, col) {
+    if (board[row][col] === '') {
+      board[row][col] = currentPlayer;
+      let cell = document.getElementById('board').children[row * 3 + col];
+      cell.innerText = currentPlayer;
+      cell.style.backgroundColor = currentPlayer === 'X' ? 'lightcoral' : 'lightgreen';
+      setTimeout(() => {
+        cell.style.backgroundColor = 'lightgray';
+      }, 500); // Задержка для анимации изменения цвета ячейки
+      if (checkWinner(currentPlayer)) {
+        alert(currentPlayer + ' победил!');
+        resetBoard();
+      } else if (checkDraw()) {
+        alert('Ничья!');
+        resetBoard();
+      } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        if (currentPlayer === 'O') {
+          setTimeout(makeComputerMove, 500);
+        }
+      }
+    }
+  }
+
+  function makeComputerMove() {
+    let emptyCells = [];
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (board[i][j] === '') {
+          emptyCells.push({row: i, col: j});
+        }
+      }
+    }
+    let randomIndex = Math.floor(Math.random() * emptyCells.length);
+    let {row, col} = emptyCells[randomIndex];
+    makeMove(row, col);
+  }
+
+  function checkWinner(player) {
+    for (let i = 0; i < 3; i++) {
+      if (board[i][0] === player && board[i][1] === player && board[i][2] === player) {
+        return true; // Проверка по горизонтали
+      }
+      if (board[0][i] === player && board[1][i] === player && board[2][i] === player) {
+        return true; // Проверка по вертикали
+      }
+    }
+    if (board[0][0] === player && board[1][1] === player && board[2][2] === player) {
+      return true; // Проверка по диагонали
+    }
+    if (board[0][2] === player && board[1][1] === player && board[2][0] === player) {
+      return true; // Проверка по диагонали
+    }
+    return false;
+  }
+
+  function checkDraw() {
+    for (let row of board) {
+      for (let cell of row) {
+        if (cell === '') {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  function resetBoard() {
+    currentPlayer = 'X';
+    board = [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', '']
+    ];
+    document.querySelectorAll('.cell').forEach(cell => {
+      cell.innerText = '';
+      cell.style.backgroundColor = 'lightgray';
+    });
+  }
+</script>
+
+</body>
+</html>

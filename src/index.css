@@ -79,3 +79,11 @@ li {
   gap: 30px;
 }
 
+.menu-link{
+  text-align: center;
+}
+
+.back-link{
+  padding: 0;
+}
+
