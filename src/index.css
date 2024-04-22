@@ -36,8 +36,46 @@ code {
   display: flex;
 }
 
-.list-reset {
+li {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
+.container{
+  max-width: 400px;
+}
+
+.header{
+  background-color: var(--tg-theme-bg-color);
+}
+
+.header-list{
+  display: flex;
+  align-content: center;
+  text-align: center;
+  justify-content: flex-start;
+}
+
+.header-logo{
+  max-width: 20%;
+}
+
+.header-container{
+  display: flex;
+  align-items: center;
+}
+.header-item{
+  padding-right: 10px;
+}
+
+.header-item:last-child{
+  padding-right: 0px;
+}
+
+.menu-list{
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
