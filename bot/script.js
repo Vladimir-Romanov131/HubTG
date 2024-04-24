@@ -3,8 +3,8 @@ const sql = require("mssql");
 const token = "7043678274:AAGqFfaaqIjAOraj2oWhtMtn_xOEqsTpO2M";
 const bot = new TelegramBot(token, { polling: true });
 const axios = require("axios");
-const express = require("express");
-const app = express();
+// const express = require("express");
+// const app = express();
 
 module.exports = { bot, token };
 
@@ -62,7 +62,6 @@ async function saveUserDataToDB(
 	}
 }
 
-// Функция для проверки существования пользователя в базе данных
 async function checkUserExists(telegramId) {
 	try {
 		await sql.connect(dbConfig);
@@ -96,7 +95,7 @@ bot.on("contact", async (msg, res) => {
 	console.log(`Телеграм id: ${telegramId}`);
 
 	try {
-		// Проверяем существование пользователя
+		// Проверяем есть ли пользователь
 		const userExists = await checkUserExists(telegramId);
 
 		if (userExists) {
@@ -106,7 +105,6 @@ bot.on("contact", async (msg, res) => {
 					`Вы уже авторизованы как ${firstName} ${lastName}, номер телефона: ${phoneNumber}`
 				)
 				.then(() => {
-					// Отправляем сообщение с предложением открыть ваше приложение
 					bot.sendMessage(
 						chatId,
 						"Для продолжения откройте приложение Hubappsi.",
@@ -125,7 +123,7 @@ bot.on("contact", async (msg, res) => {
 					);
 				});
 		} else {
-			// Если пользователь не существует, сохраняем его данные в базу данных
+			// Если нет сохраняем
 			await saveUserDataToDB(
 				userId,
 				firstName,
@@ -139,7 +137,6 @@ bot.on("contact", async (msg, res) => {
 					`Спасибо, ${firstName} ${lastName}! Вы успешно авторизованы.`
 				)
 				.then(() => {
-					// Отправляем запрос на вашу веб-страницу с данными пользователя
 					axios
 						.get("http://t.me/Hubappsi_bot/hubbb", {})
 						.catch((error) => {
