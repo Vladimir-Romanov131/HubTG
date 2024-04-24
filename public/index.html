@@ -21,7 +21,6 @@
 			<div class="header-container container">
 				<span id="firstName"></span>
 				<span id="lastName"></span>
-				<img id="avatar" alt="Аватар пользователя" />
 			</div>
 		</header>
 		<main class="main">
@@ -108,5 +107,27 @@
 				</div>
 			</section>
 		</main>
+		<script>
+			// Функция для отправки запроса на сервер и обновления данных пользователя на странице
+			async function fetchDataAndUpdate() {
+				try {
+					const response = await fetch("/userData"); // Здесь '/userData' - это маршрут на сервере, куда отправляется запрос
+					const userData = await response.json(); // Получаем данные пользователя в формате JSON
+					updateUserData(userData); // Обновляем данные пользователя на странице
+				} catch (error) {
+					console.error("Ошибка при получении данных пользователя:", error);
+				}
+			}
+
+			// Функция для обновления данных пользователя на странице
+			function updateUserData(userData) {
+				// Находим спаны по их идентификаторам и обновляем их содержимое данными пользователя
+				document.getElementById("firstName").textContent = userData.firstName;
+				document.getElementById("lastName").textContent = userData.lastName;
+			}
+
+			// Вызываем функцию fetchDataAndUpdate при загрузке страницы
+			window.onload = fetchDataAndUpdate;
+		</script>
 	</body>
 </html>

@@ -3,6 +3,8 @@ const sql = require("mssql");
 const token = "7043678274:AAGqFfaaqIjAOraj2oWhtMtn_xOEqsTpO2M";
 const bot = new TelegramBot(token, { polling: true });
 const axios = require("axios");
+const express = require("express");
+const app = express();
 
 module.exports = { bot, token };
 
@@ -80,7 +82,7 @@ async function checkUserExists(telegramId) {
 }
 
 //Обработка полученного контакта
-bot.on("contact", async (msg) => {
+bot.on("contact", async (msg, res) => {
 	const chatId = msg.chat.id;
 	const userId = msg.from.id;
 	const phoneNumber = msg.contact.phone_number;
