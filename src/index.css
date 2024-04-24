@@ -24,6 +24,7 @@ body {
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-color: var(--tg-theme-bg-color);
 }
 
 code {
@@ -45,9 +46,9 @@ li {
 	max-width: 400px;
 }
 
-.header {
-	background-color: var(--tg-theme-bg-color);
-}
+/* .header {
+
+} */
 
 .header-list {
 	display: flex;
@@ -85,6 +86,7 @@ li {
 .menu-text {
 	padding: 0;
 	margin: 0;
+	color: var(--tg-theme-text-color);
 }
 
 .menu-icon {
@@ -93,4 +95,8 @@ li {
 
 .menu-block {
 	text-align: center;
+}
+
+.header-title {
+	color: var(--tg-theme-text-color);
 }
